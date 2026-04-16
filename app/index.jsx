@@ -1,6 +1,19 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable, StatusBar } from "react-native";
 import { useState } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { useFonts } from "expo-font";
+
+// Fonts
+import {
+  DMSerifDisplay_400Regular,
+  DMSerifDisplay_400Regular_Italic,
+} from "@expo-google-fonts/dm-serif-display";
+import {
+  DMSans_400Regular,
+  DMSans_400Regular_Italic,
+  DMSans_700Bold,
+} from "@expo-google-fonts/dm-sans";
+import { FONTS } from "../assets/fonts/fonts";
 
 // CSS variables
 const ACCENT = "#c9a96e";
@@ -13,10 +26,6 @@ const TEXT = "#f0eeea";
 const MUTED = "#8a8a9a";
 const DIM = "#4a4a5a";
 const RADIUS = "16px";
-const FONTDISPLAY = "DM Serif Display";
-const FONTDISPLAYSTYLE = "serif";
-const FONTBODY = "DM Sans";
-const FONTBODYSTYLE = "sans-serif";
 
 const tageszeit = (() => {
   const stunde = new Date().getHours();
@@ -28,11 +37,27 @@ const tageszeit = (() => {
 const MOODS = ["Alles", "Musik", "Podcast"];
 
 const Home = () => {
-  const [selected, setSelected] = useState("Alle");
+  // Load fonts
+  const [fontsLoaded] = useFonts({
+    DMSerifDisplay: DMSerifDisplay_400Regular,
+    DMSans: DMSans_400Regular,
+    DMSansBold: DMSans_700Bold,
+    DMSerifDisplay_400Regular_Italic: DMSerifDisplay_400Regular_Italic,
+  });
+
+  const [selected, setSelected] = useState("Alles");
+
   return (
     // App
     <SafeAreaProvider>
       <SafeAreaView>
+        <StatusBar
+          animated={true}
+          backgroundColor="#61dafb"
+          barStyle={"dark-content"}
+          hidden={false}
+        />
+
         <View style={styles.root}>
           {/* Topbar */}
           <View style={styles.topbar}>
@@ -41,7 +66,8 @@ const Home = () => {
           <View style={styles.topbar.header}>
             <Text style={styles.topbar.header.greeting}>Guten {tageszeit}</Text>
             <Text style={styles.topbar.header.caption}>
-              Hör dir was <em style={styles.topbar.header.em}>schönes</em> an
+              Hör dir was <Text style={styles.topbar.header.em}>schönes</Text>{" "}
+              an
             </Text>
           </View>
 
@@ -131,7 +157,7 @@ const styles = StyleSheet.create({
     brandName: {
       fontSize: 16,
       color: ACCENT,
-      fontFamily: "DM Serif Display",
+      fontFamily: FONTS.display,
       fontStyle: "serif",
       letterSpacing: 1,
       fontWeight: "500",
@@ -149,14 +175,13 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: MUTED,
         marginBottom: 2,
-        fontFamiliy: FONTBODY,
-        fontStyle: FONTBODYSTYLE,
+        fontFamiliy: FONTS.body,
+        fontStyle: FONTS.body,
         justifyContent: "left",
       },
 
       caption: {
-        fontFamily: FONTDISPLAY,
-        fontStyle: FONTDISPLAYSTYLE,
+        fontFamily: FONTS.display,
         fontSize: 28,
         color: TEXT,
         fontWeight: "500",
@@ -165,7 +190,7 @@ const styles = StyleSheet.create({
 
       em: {
         color: ACCENT,
-        fontStyle: "italic",
+        fontFamily: FONTS.bodyItalic,
       },
     },
   },
@@ -187,8 +212,8 @@ const styles = StyleSheet.create({
       fontSize: 12,
       cursor: "pointer",
       transition: "all 0.2s ease-in-out",
-      fontFamily: FONTBODY,
-      fontStyle: FONTBODYSTYLE,
+      fontFamily: FONTS.body,
+      fontStyle: FONTS.body,
       fontWeight: "500",
 
       text: {
