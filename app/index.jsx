@@ -29,6 +29,7 @@ import { FONTS } from "../assets/fonts/fonts";
 import SelectorTag from "../components/SelectorTag";
 import ThemedText from "../components/ThemedText";
 import PlaylistCard from "../components/PlaylistCard";
+import PlaylistList from "../components/PlaylistList";
 
 const Home = () => {
   // Load fonts
@@ -50,55 +51,72 @@ const Home = () => {
       style={{ backgroundColor: theme.BG, fontFamily: FONTS.body }}
     >
       <SafeAreaView>
-        <ThemedView style={{ marginLeft: 24, marginRight: 24 }}>
-          {/* Topbar */}
-          <TopBar />
+        <ScrollView>
+          <ThemedView style={{ marginLeft: 24, marginRight: 24 }}>
+            {/* Topbar */}
+            <TopBar />
 
-          {/* Music / Podcast selector */}
-          <ThemedView
-            style={[
-              {
-                marginTop: 20,
-                display: "flex",
-                flexDirection: "row",
-                gap: 8,
-                flexWrap: "wrap",
-              },
-            ]}
-          >
-            <SelectorTag
-              isActive={selected === "Alles"}
-              onPress={() => setSelected("Alles")}
+            {/* Music / Podcast selector */}
+            <ThemedView
+              style={[
+                {
+                  marginTop: 20,
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 8,
+                  flexWrap: "wrap",
+                },
+              ]}
             >
-              Alles
-            </SelectorTag>
-            <SelectorTag
-              isActive={selected === "Musik"}
-              onPress={() => setSelected("Musik")}
-            >
-              Musik
-            </SelectorTag>
-            <SelectorTag
-              isActive={selected === "Podcast"}
-              onPress={() => setSelected("Podcast")}
-            >
-              Podcast
-            </SelectorTag>
-          </ThemedView>
+              <SelectorTag
+                isActive={selected === "Alles"}
+                onPress={() => setSelected("Alles")}
+              >
+                Alles
+              </SelectorTag>
+              <SelectorTag
+                isActive={selected === "Musik"}
+                onPress={() => setSelected("Musik")}
+              >
+                Musik
+              </SelectorTag>
+              <SelectorTag
+                isActive={selected === "Podcast"}
+                onPress={() => setSelected("Podcast")}
+              >
+                Podcast
+              </SelectorTag>
+            </ThemedView>
 
-          {/* Zuletzt gehört */}
-          <ThemedView style={[{ marginTop: 30 }]}>
-            <MutedText>Zuletzt gehört</MutedText>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              <PlaylistCard style={{ marginTop: 14 }} />
-              <PlaylistCard style={{ marginTop: 14 }} />
-              <PlaylistCard style={{ marginTop: 14 }} />
-            </ScrollView>
+            {/* Zuletzt gehört */}
+            <ThemedView style={[{ marginTop: 30 }]}>
+              <MutedText>Zuletzt gehört</MutedText>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                style={{ marginTop: -10 }}
+              >
+                <PlaylistCard style={{ marginTop: 14 }} />
+                <PlaylistCard style={{ marginTop: 14 }} />
+                <PlaylistCard style={{ marginTop: 14 }} />
+              </ScrollView>
+            </ThemedView>
+
+            {/* Aktuelle Playlist */}
+            <ThemedView style={[{ marginTop: 30 }]}>
+              <MutedText>Aktuelle Playlist</MutedText>
+              <ScrollView>
+                <PlaylistList style={{ marginTop: 10 }} isPlaying={false} />
+                <PlaylistList style={{ marginTop: 10 }} isPlaying={true} />
+                <PlaylistList style={{ marginTop: 10 }} isPlaying={false} />
+                <PlaylistList style={{ marginTop: 10 }} isPlaying={false} />
+                <PlaylistList style={{ marginTop: 10 }} isPlaying={false} />
+              </ScrollView>
+            </ThemedView>
           </ThemedView>
-        </ThemedView>
+        </ScrollView>
+
+        {/* Player */}
       </SafeAreaView>
     </SafeAreaProvider>
   );

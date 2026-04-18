@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     },
 
     header: {
-      paddingTop: 20,
+      // paddingTop: 20,
       //   paddingLeft: 24,
       //   paddingRight: 24,
       paddingBottom: 0,
