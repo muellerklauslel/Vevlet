@@ -1,14 +1,8 @@
-import { StyleSheet, Text, useColorScheme, View } from "react-native";
-import { useFonts } from "expo-font";
+import { StyleSheet, Text, View } from "react-native";
 import { Colors } from "../constants/Colors";
 
 // FONTS
-import { FONTS } from "../assets/fonts/fonts"; // Fonts
-import {
-  DMSerifDisplay_400Regular,
-  DMSerifDisplay_400Regular_Italic,
-} from "@expo-google-fonts/dm-serif-display";
-import { DMSans_400Regular, DMSans_700Bold } from "@expo-google-fonts/dm-sans";
+import { FONTS } from "../assets/fonts/fonts";
 import ThemedView from "../components/ThemedView";
 import AccentText from "../components/AccentText";
 import ThemedText from "../components/ThemedText";
@@ -21,13 +15,6 @@ const TopBar = () => {
     if (stunde < 18) return "Tag";
     return "Abend";
   })();
-
-  const [fontsLoaded] = useFonts({
-    DMSerifDisplay: DMSerifDisplay_400Regular,
-    DMSans: DMSans_400Regular,
-    DMSansBold: DMSans_700Bold,
-    DMSerifDisplay_400Regular_Italic: DMSerifDisplay_400Regular_Italic,
-  });
 
   return (
     <ThemedView>
@@ -78,8 +65,7 @@ const styles = StyleSheet.create({
       greeting: {
         fontSize: 12,
         marginBottom: 2,
-        fontFamiliy: FONTS.body,
-        fontStyle: FONTS.body,
+        fontFamily: FONTS.body,
         justifyContent: "left",
       },
 

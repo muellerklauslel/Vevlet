@@ -8,6 +8,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { FONTS } from "../assets/fonts/fonts";
 import { Ionicons } from "@expo/vector-icons";
 import * as Svg from "react-native-svg";
+import MiniPlayer from "../components/MiniPlayer";
 
 const RootLayout = () => {
   const colorScheme = useColorScheme();

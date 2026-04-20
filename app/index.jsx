@@ -1,11 +1,9 @@
 import {
   StyleSheet,
-  Text,
-  View,
-  Pressable,
-  StatusBar,
   useColorScheme,
   ScrollView,
+  Text,
+  ActivityIndicator,
 } from "react-native";
 import { useState } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -14,6 +12,7 @@ import { Colors } from "../constants/Colors";
 import ThemedView from "../components/ThemedView";
 import TopBar from "../components/TopBar";
 import MutedText from "../components/MutedText";
+import MiniPlayer from "../components/MiniPlayer";
 
 // Fonts
 import {
@@ -42,8 +41,25 @@ const Home = () => {
 
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
-
   const [selected, setSelected] = useState("Alles");
+
+  if (!fontsLoaded) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: theme.BG,
+        }}
+      >
+        <ActivityIndicator size="large" color={theme.ACCENT} />
+        <Text style={{ marginTop: 12, color: theme.TEXT, fontSize: 16 }}>
+          Schriftarten werden geladen...
+        </Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     // App
@@ -115,13 +131,18 @@ const Home = () => {
             </ThemedView>
           </ThemedView>
         </ScrollView>
-
         {/* Player */}
+        <MiniPlayer
+          style={{
+            position: "absolute",
+            bottom: 0, // ← direkt über NavBar (ggf. anpassen)
+            left: 0,
+            right: 0,
+          }}
+        />
       </SafeAreaView>
     </SafeAreaProvider>
   );
 };
 
 export default Home;
-
-const styles = StyleSheet.create({});
