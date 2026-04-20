@@ -18,6 +18,7 @@ const RootLayout = () => {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: theme.BG }}>
         <StatusBar value="auto" />
+
         <Tabs
           screenOptions={{
             headerShown: false,

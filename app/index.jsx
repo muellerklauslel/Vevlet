@@ -26,7 +26,6 @@ import {
 } from "@expo-google-fonts/dm-sans";
 import { FONTS } from "../assets/fonts/fonts";
 import SelectorTag from "../components/SelectorTag";
-import ThemedText from "../components/ThemedText";
 import PlaylistCard from "../components/PlaylistCard";
 import PlaylistList from "../components/PlaylistList";
 

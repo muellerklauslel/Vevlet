@@ -1,4 +1,6 @@
 export const Colors = {
+  radius: 16,
+
   dark: {
     ACCENT: "#c9a96e",
     BG: "#0a0a0f",
