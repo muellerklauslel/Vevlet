@@ -6,7 +6,7 @@ import ThemedText from "./ThemedText";
 import ThemedView from "./ThemedView";
 import MutedText from "./MutedText";
 
-const PlaylistList = ({ style, isPlaying, key, playlist, ...props }) => {
+const ArtistList = ({ style, isPlaying, key, artist, ...props }) => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
 
@@ -28,7 +28,7 @@ const PlaylistList = ({ style, isPlaying, key, playlist, ...props }) => {
         },
         style,
       ]}
-      onPress={() => console.log("Playlist gedrückt: " + playlist.name)}
+      onPress={() => console.log("Artist gedrückt: " + artist.name)}
       //   {...props}
     >
       <LinearGradient
@@ -39,7 +39,7 @@ const PlaylistList = ({ style, isPlaying, key, playlist, ...props }) => {
           left: 0,
           right: 0,
           bottom: 0,
-          borderRadius: 10,
+          borderRadius: "50%",
           height: 70,
           width: 70,
         }}
@@ -60,7 +60,7 @@ const PlaylistList = ({ style, isPlaying, key, playlist, ...props }) => {
             fontSize: 18,
           }}
         >
-          {playlist?.name || "Playlist Name"}
+          {artist?.name || "Playlist Name"}
         </ThemedText>
         <MutedText
           style={{
@@ -68,7 +68,7 @@ const PlaylistList = ({ style, isPlaying, key, playlist, ...props }) => {
             fontSize: 12,
           }}
         >
-          {playlist.artists?.map((artist) => artist.name).join(", ") ||
+          {artist.artists?.map((artist) => artist.name).join(", ") ||
             "Artist Name"}
         </MutedText>
       </ThemedView>
@@ -76,4 +76,4 @@ const PlaylistList = ({ style, isPlaying, key, playlist, ...props }) => {
   );
 };
 
-export default PlaylistList;
+export default ArtistList;

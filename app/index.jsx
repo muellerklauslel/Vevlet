@@ -42,6 +42,34 @@ const Home = () => {
   const theme = Colors[colorScheme] ?? Colors.light;
   const [selected, setSelected] = useState("Alles");
 
+  const playlists = [
+    {
+      id: 1,
+      name: "Chill Vibes",
+      artists: [{ name: "Artist 1" }, { name: "Artist 2" }],
+    },
+    {
+      id: 2,
+      name: "Workout Mix",
+      artists: [{ name: "Artist 3" }, { name: "Artist 4" }],
+    },
+    {
+      id: 3,
+      name: "Top Hits",
+      artists: [{ name: "Artist 5" }, { name: "Artist 6" }],
+    },
+    {
+      id: 4,
+      name: "Indie Gems",
+      artists: [{ name: "Artist 7" }, { name: "Artist 8" }],
+    },
+    {
+      id: 5,
+      name: "Classical Essentials",
+      artists: [{ name: "Artist 9" }, { name: "Artist 10" }],
+    },
+  ];
+
   if (!fontsLoaded) {
     return (
       <SafeAreaView
@@ -111,22 +139,20 @@ const Home = () => {
                 showsHorizontalScrollIndicator={false}
                 style={{ marginTop: -10 }}
               >
-                <PlaylistCard style={{ marginTop: 14 }} />
-                <PlaylistCard style={{ marginTop: 14 }} />
-                <PlaylistCard style={{ marginTop: 14 }} />
+                <PlaylistCard style={{ marginTop: 14 }} key={1} />
+                <PlaylistCard style={{ marginTop: 14 }} key={2} />
+                <PlaylistCard style={{ marginTop: 14 }} key={3} />
               </ScrollView>
             </ThemedView>
 
             {/* Aktuelle Playlist */}
-            <ThemedView style={[{ marginTop: 30 }]}>
+            <ThemedView style={[{ marginTop: 30, marginBottom: 90 }]}>
               <MutedText>Aktuelle Playlist</MutedText>
-              <ScrollView>
-                <PlaylistList style={{ marginTop: 10 }} isPlaying={false} />
-                <PlaylistList style={{ marginTop: 10 }} isPlaying={true} />
-                <PlaylistList style={{ marginTop: 10 }} isPlaying={false} />
-                <PlaylistList style={{ marginTop: 10 }} isPlaying={false} />
-                <PlaylistList style={{ marginTop: 10 }} isPlaying={false} />
-              </ScrollView>
+              {/* <ScrollView> */}
+              {playlists.map((playlist) => (
+                <PlaylistList key={playlist.id} playlist={playlist} />
+              ))}
+              {/* </ScrollView> */}
             </ThemedView>
           </ThemedView>
         </ScrollView>

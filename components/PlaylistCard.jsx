@@ -1,17 +1,17 @@
-import { Image, View, useColorScheme } from "react-native";
+import { Image, Pressable, View, useColorScheme } from "react-native";
 import { Colors } from "../constants/Colors";
 import { FONTS } from "../assets/fonts/fonts";
 import ThemedView from "./ThemedView";
 import ThemedText from "./ThemedText";
 import MutedText from "./MutedText";
 
-const PlaylistCard = ({ style, ...props }) => {
+const PlaylistCard = ({ style, key, ...props }) => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
 
   return (
     <>
-      <ThemedView
+      <Pressable
         style={[
           {
             height: 260,
@@ -22,6 +22,7 @@ const PlaylistCard = ({ style, ...props }) => {
             marginRight: 15,
           },
         ]}
+        onPress={() => console.log("Zuletzt gehört gedrückt: " + key)}
       >
         <Image
           source={require("../assets/placeholders/playlist-placeholder.png")}
@@ -49,7 +50,7 @@ const PlaylistCard = ({ style, ...props }) => {
           </ThemedText>
           <MutedText style={{ marginLeft: 10 }}>48 Songs · 3h 12m</MutedText>
         </View>
-      </ThemedView>
+      </Pressable>
     </>
   );
 };
