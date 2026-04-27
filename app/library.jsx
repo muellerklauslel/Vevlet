@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text, View, useColorScheme } from "react-native";
+import { ScrollView, Text, View, useColorScheme } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../constants/Colors";
 import { FONTS } from "../assets/fonts/fonts";
@@ -9,6 +9,7 @@ import LibrarySelector from "../components/LibrarySelector";
 import PlaylistList from "../components/PlaylistList";
 import AlbumList from "../components/AlbumList";
 import ArtistList from "../components/ArtistList";
+import MiniPlayer from "../components/MiniPlayer";
 
 const Library = () => {
   const colorScheme = useColorScheme();
@@ -91,72 +92,84 @@ const Library = () => {
       style={{ backgroundColor: theme.BG, fontFamily: FONTS.body }}
     >
       <SafeAreaView>
-        <ThemedView style={{ marginLeft: 24, marginRight: 24 }}>
-          <ThemedText
-            style={{
-              fontFamily: FONTS.display,
-              fontSize: 32,
-              color: theme.ACCENT,
-            }}
-          >
-            Bibliothek
-          </ThemedText>
+        <ScrollView style={{ height: "100%" }}>
+          <ThemedView style={{ marginLeft: 24, marginRight: 24 }}>
+            <ThemedText
+              style={{
+                fontFamily: FONTS.display,
+                fontSize: 32,
+                color: theme.ACCENT,
+              }}
+            >
+              Bibliothek
+            </ThemedText>
 
-          {/* Playlist / Album / Artist Selector */}
-          <ThemedView
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              backgroundColor: theme.SURFACE2,
-              marginTop: 16,
-              padding: 5,
-              borderRadius: 12,
-            }}
-          >
-            <LibrarySelector
-              isActive={activeTab === "Playlist"}
-              onPress={() => setActiveTab("Playlist")}
+            {/* Playlist / Album / Artist Selector */}
+            <ThemedView
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                backgroundColor: theme.SURFACE2,
+                marginTop: 16,
+                padding: 5,
+                borderRadius: 12,
+              }}
             >
-              Playlist
-            </LibrarySelector>
-            <LibrarySelector
-              isActive={activeTab === "Album"}
-              onPress={() => setActiveTab("Album")}
-            >
-              Album
-            </LibrarySelector>
-            <LibrarySelector
-              isActive={activeTab === "Artist"}
-              onPress={() => setActiveTab("Artist")}
-            >
-              Artist
-            </LibrarySelector>
+              <LibrarySelector
+                isActive={activeTab === "Playlist"}
+                onPress={() => setActiveTab("Playlist")}
+              >
+                Playlist
+              </LibrarySelector>
+              <LibrarySelector
+                isActive={activeTab === "Album"}
+                onPress={() => setActiveTab("Album")}
+              >
+                Album
+              </LibrarySelector>
+              <LibrarySelector
+                isActive={activeTab === "Artist"}
+                onPress={() => setActiveTab("Artist")}
+              >
+                Artist
+              </LibrarySelector>
+            </ThemedView>
+
+            {/* Content for the selected tab */}
+            {activeTab === "Playlist" && (
+              <ThemedView style={{ marginTop: 24 }}>
+                {playlists.map((playlist) => (
+                  <PlaylistList key={playlist.id} playlist={playlist} />
+                ))}
+              </ThemedView>
+            )}
+            {activeTab === "Album" && (
+              <ThemedView style={{ marginTop: 24 }}>
+                {albums.map((album) => (
+                  <AlbumList key={album.id} album={album} />
+                ))}
+              </ThemedView>
+            )}
+            {activeTab === "Artist" && (
+              <ThemedView style={{ marginTop: 24 }}>
+                {artist.map((artist) => (
+                  <ArtistList key={artist.id} artist={artist} />
+                ))}
+              </ThemedView>
+            )}
           </ThemedView>
+        </ScrollView>
 
-          {/* Content for the selected tab */}
-          {activeTab === "Playlist" && (
-            <ThemedView style={{ marginTop: 24 }}>
-              {playlists.map((playlist) => (
-                <PlaylistList key={playlist.id} playlist={playlist} />
-              ))}
-            </ThemedView>
-          )}
-          {activeTab === "Album" && (
-            <ThemedView style={{ marginTop: 24 }}>
-              {albums.map((album) => (
-                <AlbumList key={album.id} album={album} />
-              ))}
-            </ThemedView>
-          )}
-          {activeTab === "Artist" && (
-            <ThemedView style={{ marginTop: 24 }}>
-              {artist.map((artist) => (
-                <ArtistList key={artist.id} artist={artist} />
-              ))}
-            </ThemedView>
-          )}
-        </ThemedView>
+        {/* MiniPlayer */}
+        <MiniPlayer
+          style={{
+            position: "absolute",
+            bottom: 0, // ← direkt über NavBar (ggf. anpassen)
+            left: 0,
+            right: 0,
+          }}
+        />
       </SafeAreaView>
     </SafeAreaProvider>
   );
