@@ -6,20 +6,32 @@ import ThemedView from "./ThemedView";
 import ThemedText from "./ThemedText";
 import MutedText from "./MutedText";
 import { Ionicons } from "@expo/vector-icons";
+import { usePlayer } from "../context/PlayerContext";
 
 const MiniPlayer = ({ style }) => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
 
-  const [isPlaying, setIsPlaying] = useState(false); // ← Hier kannst du den tatsächlichen Play-Status verwenden
+  // const [isPlaying, setIsPlaying] = useState(false); // ← Hier kannst du den tatsächlichen Play-Status verwenden
+  const {
+    currentTrack,
+    isPlaying,
+    progress,
+    togglePlay,
+    skipNext,
+    openPlayer,
+  } = usePlayer();
 
   const togglePlayPause = () => {
-    setIsPlaying((prev) => !prev);
-    // Hier kannst du auch die Logik zum Abspielen/Pausieren der Musik hinzufügen
+    togglePlay();
   };
 
   return (
-    <ThemedView
+    <Pressable
+      onPress={() => {
+        console.log("Miniplayer pressed");
+        openPlayer();
+      }}
       style={[
         {
           backgroundColor: theme.SURFACE3,
@@ -73,7 +85,7 @@ const MiniPlayer = ({ style }) => {
           style={{ marginLeft: "auto" }} // ← Button ganz rechts
         />
       </Pressable>
-    </ThemedView>
+    </Pressable>
   );
 };
 

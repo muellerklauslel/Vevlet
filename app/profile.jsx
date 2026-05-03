@@ -6,7 +6,6 @@ import ThemedView from "../components/ThemedView";
 import ThemedText from "../components/ThemedText";
 import MutedText from "../components/MutedText";
 import SettingListItem from "../components/SettingListItem";
-import MiniPlayer from "../components/MiniPlayer";
 
 const profile = () => {
   const colorScheme = useColorScheme();
@@ -154,15 +153,6 @@ const profile = () => {
             </ThemedView>
           </ThemedView>
         </ScrollView>
-        {/* MiniPlayer */}
-        <MiniPlayer
-          style={{
-            position: "absolute",
-            bottom: 0, // ← direkt über NavBar (ggf. anpassen)
-            left: 0,
-            right: 0,
-          }}
-        />
       </SafeAreaView>
     </SafeAreaProvider>
   );

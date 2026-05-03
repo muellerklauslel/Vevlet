@@ -12,7 +12,6 @@ import { Colors } from "../constants/Colors";
 import ThemedView from "../components/ThemedView";
 import TopBar from "../components/TopBar";
 import MutedText from "../components/MutedText";
-import MiniPlayer from "../components/MiniPlayer";
 
 // Fonts
 import {
@@ -156,15 +155,6 @@ const Home = () => {
             </ThemedView>
           </ThemedView>
         </ScrollView>
-        {/* Player */}
-        <MiniPlayer
-          style={{
-            position: "absolute",
-            bottom: 0, // ← direkt über NavBar (ggf. anpassen)
-            left: 0,
-            right: 0,
-          }}
-        />
       </SafeAreaView>
     </SafeAreaProvider>
   );

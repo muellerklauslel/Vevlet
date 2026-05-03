@@ -9,7 +9,6 @@ import LibrarySelector from "../components/LibrarySelector";
 import PlaylistList from "../components/PlaylistList";
 import AlbumList from "../components/AlbumList";
 import ArtistList from "../components/ArtistList";
-import MiniPlayer from "../components/MiniPlayer";
 
 const Library = () => {
   const colorScheme = useColorScheme();
@@ -160,16 +159,6 @@ const Library = () => {
             )}
           </ThemedView>
         </ScrollView>
-
-        {/* MiniPlayer */}
-        <MiniPlayer
-          style={{
-            position: "absolute",
-            bottom: 0, // ← direkt über NavBar (ggf. anpassen)
-            left: 0,
-            right: 0,
-          }}
-        />
       </SafeAreaView>
     </SafeAreaProvider>
   );

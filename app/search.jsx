@@ -12,7 +12,6 @@ import { Colors } from "../constants/Colors";
 import ThemedView from "../components/ThemedView";
 import ThemedText from "../components/ThemedText";
 import MutedText from "../components/MutedText";
-import MiniPlayer from "../components/MiniPlayer";
 import GenreCard from "../components/GenreCard";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -136,16 +135,6 @@ const Search = () => {
               </ThemedView>
             </ThemedView>
           </ThemedView>
-
-          {/* MiniPlayer */}
-          <MiniPlayer
-            style={{
-              position: "absolute",
-              bottom: -110, // ← direkt über NavBar (ggf. anpassen)
-              left: 0,
-              right: 0,
-            }}
-          />
         </SafeAreaView>
       </TouchableWithoutFeedback>
     </SafeAreaProvider>
