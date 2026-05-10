@@ -70,7 +70,8 @@ const RootLayout = () => {
               }}
             />
           </Tabs>
-          <MiniPlayer style={{ bottom: 95 }} /> <PlayerScreen />
+          <MiniPlayer style={{ bottom: 95 }} />
+          <PlayerScreen />
         </PlayerProvider>
       </SafeAreaView>
     </SafeAreaProvider>

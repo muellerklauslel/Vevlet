@@ -6,15 +6,17 @@ import {
   Pressable,
   ScrollView,
   Share,
-  StyleSheet,
-  Text,
   TouchableOpacity,
-  View,
+  useColorScheme,
 } from "react-native";
 import { useCallback, useEffect, useRef } from "react";
 import { usePlayer } from "../context/PlayerContext";
 import { Ionicons } from "@expo/vector-icons";
 import ArtistList from "./ArtistList";
+import { Colors } from "../constants/Colors";
+import ThemedView from "./ThemedView";
+import ThemedText from "./ThemedText";
+import MutedText from "./MutedText";
 
 const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get("window");
 
@@ -39,6 +41,9 @@ const formatTime = (seconds) => {
 const Artwork = ({ color2, isPlaying }) => {
   const scaleAnim = useRef(new Animated.Value(isPlaying ? 1 : 0.88)).current;
 
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme] ?? Colors.light;
+
   useEffect(() => {
     Animated.spring(scaleAnim, {
       toValue: isPlaying ? 1 : 0.88,
@@ -50,9 +55,30 @@ const Artwork = ({ color2, isPlaying }) => {
 
   return (
     <Animated.View
-      style={[styles.artwork, { transform: [{ scale: scaleAnim }] }]}
+      style={[
+        {
+          width: SCREEN_W - 80,
+          height: SCREEN_W - 80,
+          borderRadius: 24,
+          overflow: "hidden",
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 20 },
+          shadowOpacity: 0.6,
+          shadowRadius: 40,
+          elevation: 20,
+        },
+        { transform: [{ scale: scaleAnim }] },
+      ]}
     >
-      <View style={[styles.artworkInner, { backgroundColor: color2 }]} />
+      <ThemedView
+        style={[
+          {
+            flex: 1,
+            borderRadius: 24,
+          },
+          { backgroundColor: theme.ACCENT },
+        ]}
+      />
     </Animated.View>
   );
 };
@@ -60,6 +86,9 @@ const Artwork = ({ color2, isPlaying }) => {
 /** Fortschrittsbalken + Seek */
 const ProgressBar = ({ progress, duration, onSeek }) => {
   const barRef = useRef(null);
+
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme] ?? Colors.light;
 
   const handlePress = useCallback(
     (e) => {
@@ -76,82 +105,71 @@ const ProgressBar = ({ progress, duration, onSeek }) => {
   const remaining = duration - elapsed;
 
   return (
-    <View style={styles.progressSection}>
+    <ThemedView
+      style={{
+        marginBottom: 28,
+        gap: 8,
+      }}
+    >
       <Pressable
         ref={barRef}
-        style={styles.progressTrack}
+        style={{
+          height: 4,
+          backgroundColor: theme.SURFACE3,
+          borderRadius: 2,
+        }}
         onPress={handlePress}
       >
-        <View style={[styles.progressFill, { width: `${progress * 100}%` }]}>
-          <View style={styles.progressThumb} />
-        </View>
+        <ThemedView
+          style={[
+            {
+              height: "100%",
+              backgroundColor: theme.ACCENT,
+              borderRadius: 2,
+              position: "relative",
+            },
+            { width: `${progress * 100}%` },
+          ]}
+        >
+          <ThemedView
+            style={{
+              position: "absolute",
+              right: -6,
+              top: -4,
+              width: 12,
+              height: 12,
+              borderRadius: 6,
+              backgroundColor: theme.TEXT,
+            }}
+          />
+        </ThemedView>
       </Pressable>
-      <View style={styles.progressTimes}>
-        <Text style={styles.timeText}>{formatTime(elapsed)}</Text>
-        <Text style={styles.timeText}>-{formatTime(remaining)}</Text>
-      </View>
-    </View>
-  );
-};
-
-const IconBtn = ({ onPress, children, size = 44, accent = false }) => (
-  <TouchableOpacity
-    onPress={onPress}
-    activeOpacity={0.6}
-    style={[
-      styles.iconBtn,
-      { width: size, height: size, borderRadius: size / 2 },
-      accent == true ? styles.iconBtnAccent : null,
-    ]}
-  >
-    {children}
-  </TouchableOpacity>
-);
-
-const PlayPauseBtn = ({ isPlaying, onPress }) => (
-  <TouchableOpacity
-    onPress={onPress}
-    activeOpacity={0.8}
-    style={styles.playPauseBtn}
-  >
-    {isPlaying ? (
-      <View style={styles.pauseIcon}>
-        <View style={styles.pauseBar} />
-        <View style={styles.pauseBar} />
-      </View>
-    ) : (
-      <View style={styles.playIcon} />
-    )}
-  </TouchableOpacity>
-);
-
-const ShuffleIcon = ({ active }) => (
-  <View style={{ gap: 3 }}>
-    <View
-      style={[
-        styles.shuffleLine,
-        { width: 14 },
-        active == true ? { backgroundColor: ACCENT } : null,
-      ]}
-    />
-    <View
-      style={[
-        styles.shuffleLine,
-        { width: 10 },
-        active == true ? { backgroundColor: ACCENT } : null,
-      ]}
-    />
-  </View>
-);
-
-const RepeatLabel = ({ mode }) => {
-  const color = mode === "off" ? DIM : ACCENT;
-  return (
-    <Text
-      style={{ fontSize: 10, fontWeight: "700", color, letterSpacing: 0.5 }}
-    >
-      {mode === "one" ? "1×" : "↺"}
-    </Text>
+      <ThemedView
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <ThemedText
+          style={{
+            fontSize: 11,
+            color: DIM,
+            fontVariant: ["tabular-nums"],
+          }}
+        >
+          {formatTime(elapsed)}
+        </ThemedText>
+        <ThemedText
+          style={{
+            fontSize: 11,
+            color: DIM,
+            fontVariant: ["tabular-nums"],
+          }}
+        >
+          -{formatTime(remaining)}
+        </ThemedText>
+      </ThemedView>
+    </ThemedView>
   );
 };
 
@@ -211,6 +229,11 @@ const PlayerScreen = () => {
 
   const duration = currentTrack.duration || 240;
 
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme] ?? Colors.light;
+
+  var mode = repeatMode;
+
   return (
     <Modal
       visible={playerOpen}
@@ -218,49 +241,134 @@ const PlayerScreen = () => {
       presentationStyle="pageSheet"
       onRequestClose={closePlayer}
     >
-      <Animated.View style={[styles.root, { transform: [{ translateY }] }]}>
+      <Animated.View
+        style={[
+          {
+            flex: 1,
+            backgroundColor: theme.BG,
+            paddingHorizontal: 24,
+          },
+          { transform: [{ translateY }] },
+        ]}
+      >
         <ScrollView
           style={{ margin: 0, padding: 0 }}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
           {/* ── Drag Handle ── */}
-          <View {...panResponder.panHandlers} style={styles.handleArea}>
-            <View style={styles.handle} />
-          </View>
+          <ThemedView
+            {...panResponder.panHandlers}
+            style={{
+              alignItems: "center",
+              paddingTop: 12,
+              paddingBottom: 4,
+            }}
+          >
+            <ThemedView
+              style={{
+                width: 36,
+                height: 4,
+                borderRadius: 2,
+                backgroundColor: S3,
+              }}
+            />
+          </ThemedView>
 
           {/* ── Topbar ── */}
-          <View style={styles.topbar}>
+          <ThemedView
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              paddingVertical: 16,
+            }}
+          >
             <TouchableOpacity
               onPress={closePlayer}
-              style={styles.closeBtn}
+              style={{
+                width: 36,
+                height: 36,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
               activeOpacity={0.6}
             >
-              <View style={styles.chevronDown} />
+              <Ionicons
+                name="chevron-down"
+                size={24}
+                color={MUTED}
+                style={{ marginTop: -6 }}
+              />
             </TouchableOpacity>
-            <View style={styles.topbarCenter}>
-              <Text style={styles.topbarLabel}>Grade läuft</Text>
-            </View>
-            <TouchableOpacity style={styles.moreBtn} activeOpacity={0.6}>
+            <ThemedView
+              style={{
+                flex: 1,
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
+              <ThemedText
+                style={{
+                  fontSize: 10,
+                  fontWeight: "600",
+                  letterSpacing: 0.8,
+                  color: MUTED,
+                  textTransform: "uppercase",
+                }}
+              >
+                Grade läuft
+              </ThemedText>
+            </ThemedView>
+            <TouchableOpacity activeOpacity={0.6}>
               <Ionicons name="ellipsis-vertical" size={20} color={MUTED} />
             </TouchableOpacity>
-          </View>
+          </ThemedView>
 
           {/* ── Artwork ── */}
-          <View style={styles.artworkSection}>
+          <ThemedView
+            style={{
+              alignItems: "center",
+              marginVertical: 24,
+            }}
+          >
             <Artwork color2={currentTrack.color2} isPlaying={isPlaying} />
-          </View>
+          </ThemedView>
 
           {/* ── Meta + Like ── */}
-          <View style={styles.metaRow}>
-            <View style={styles.metaText}>
-              <Text style={styles.trackTitle} numberOfLines={1}>
+          <ThemedView
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 16,
+              marginBottom: 24,
+            }}
+          >
+            <ThemedView
+              style={{
+                flex: 1,
+                gap: 4,
+              }}
+            >
+              <ThemedText
+                style={{
+                  fontSize: 22,
+                  fontWeight: "600",
+                  color: TEXT,
+                }}
+                numberOfLines={1}
+              >
                 {currentTrack.title || "Unbekannter Titel"}
-              </Text>
-              <Text style={styles.trackArtist} numberOfLines={1}>
+              </ThemedText>
+              <ThemedText
+                style={{
+                  fontSize: 16,
+                  color: MUTED,
+                }}
+                numberOfLines={1}
+              >
                 {currentTrack.artist || "Unbekannter Künstler"}
-              </Text>
-            </View>
+              </ThemedText>
+            </ThemedView>
             <TouchableOpacity
               onPress={() => setIsLiked((v) => !v)}
               activeOpacity={0.7}
@@ -271,7 +379,7 @@ const PlayerScreen = () => {
                 color={isLiked ? ACCENT : MUTED}
               />
             </TouchableOpacity>
-          </View>
+          </ThemedView>
 
           {/* ── Progress ── */}
           <ProgressBar
@@ -281,82 +389,201 @@ const PlayerScreen = () => {
           />
 
           {/* ── Controls ── */}
-          <View style={styles.controls}>
+          <ThemedView
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: 36,
+            }}
+          >
             {/* Shuffle */}
             <TouchableOpacity
               onPress={() => setIsShuffle((v) => !v)}
               activeOpacity={0.6}
-              style={styles.sideBtn}
+              style={{
+                width: 44,
+                height: 44,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <ShuffleIcon active={isShuffle} />
+              <Ionicons
+                name="shuffle"
+                size={24}
+                color={isShuffle ? ACCENT : MUTED}
+              />
             </TouchableOpacity>
 
             {/* Zurück */}
             <TouchableOpacity
               onPress={skipPrev}
               activeOpacity={0.6}
-              style={styles.sideBtn}
+              style={{
+                width: 44,
+                height: 44,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <View style={styles.skipPrevIcon}>
-                <View style={styles.skipBar} />
-                <View
-                  style={[styles.skipTriangle, { transform: [{ scaleX: -1 }] }]}
-                />
-              </View>
+              <Ionicons name="play-skip-back" size={24} color={MUTED} />
             </TouchableOpacity>
 
             {/* Play / Pause */}
-            <PlayPauseBtn isPlaying={isPlaying} onPress={togglePlay} />
+            {isPlaying ? (
+              <Ionicons
+                name="pause-circle"
+                size={80}
+                color={theme.ACCENT}
+                onPress={togglePlay}
+                style={{
+                  shadowColor: ACCENT,
+                  shadowOffset: { width: 0, height: 8 },
+                  shadowOpacity: 0.35,
+                  shadowRadius: 16,
+                  elevation: 10,
+                }}
+              />
+            ) : (
+              <Ionicons
+                name="play-circle"
+                size={80}
+                color={theme.ACCENT}
+                onPress={togglePlay}
+                style={{
+                  shadowColor: ACCENT,
+                  shadowOffset: { width: 0, height: 8 },
+                  shadowOpacity: 0.35,
+                  shadowRadius: 16,
+                  elevation: 10,
+                }}
+              />
+            )}
 
             {/* Vor */}
             <TouchableOpacity
               onPress={skipNext}
               activeOpacity={0.6}
-              style={styles.sideBtn}
+              style={{
+                width: 44,
+                height: 44,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <View style={styles.skipNextIcon}>
-                <View style={styles.skipTriangle} />
-                <View style={styles.skipBar} />
-              </View>
+              <Ionicons name="play-skip-forward" size={24} color={MUTED} />
             </TouchableOpacity>
 
             {/* Repeat */}
             <TouchableOpacity
               onPress={cycleRepeat}
               activeOpacity={0.6}
-              style={styles.sideBtn}
+              style={{
+                width: 44,
+                height: 44,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <RepeatLabel mode={repeatMode} />
+              <ThemedText
+                style={{
+                  fontSize: 24,
+                  fontFamily: "System",
+                  fontWeight: "400",
+                  color: mode === "off" ? DIM : ACCENT,
+                  letterSpacing: 0.5,
+                }}
+              >
+                {mode === "one" ? "1×" : "↺"}
+              </ThemedText>
             </TouchableOpacity>
-          </View>
+          </ThemedView>
 
           {/* ── Volume ── */}
-          <View style={styles.volumeRow}>
+          <ThemedView
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 12,
+              marginBottom: 32,
+            }}
+          >
             {/* Lautsprecher min */}
             <Ionicons name="volume-low" size={20} color={MUTED} />
             <Pressable
-              style={styles.volumeTrack}
+              style={{
+                flex: 1,
+                height: 4,
+                backgroundColor: S3,
+                borderRadius: 2,
+              }}
               onPress={(e) => {
                 const ratio =
                   e.nativeEvent.locationX / (SCREEN_W - 48 - 28 - 28);
                 setVolume(Math.max(0, Math.min(1, ratio)));
               }}
             >
-              <View style={[styles.volumeFill, { width: `${volume * 100}%` }]}>
-                <View style={styles.volumeThumb} />
-              </View>
+              <ThemedView
+                style={[
+                  {
+                    height: "100%",
+                    backgroundColor: MUTED,
+                    borderRadius: 2,
+                    position: "relative",
+                  },
+                  { width: `${volume * 100}%` },
+                ]}
+              >
+                <ThemedView
+                  style={{
+                    position: "absolute",
+                    right: -5,
+                    top: -3,
+                    width: 10,
+                    height: 10,
+                    borderRadius: 5,
+                    backgroundColor: TEXT,
+                  }}
+                />
+              </ThemedView>
             </Pressable>
             {/* Lautsprecher max */}
             <Ionicons name="volume-medium" size={20} color={MUTED} />
-          </View>
+          </ThemedView>
 
           {/* ── Bottom Actions ── */}
-          <View style={styles.bottomActions}>
-            <TouchableOpacity style={styles.actionBtn} activeOpacity={0.6}>
-              <Text style={styles.actionLabel}>Zur Warteschlange</Text>
+          <ThemedView
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                borderRadius: 20,
+                backgroundColor: S2,
+              }}
+              activeOpacity={0.6}
+            >
+              <ThemedText
+                style={{
+                  fontSize: 12,
+                  fontWeight: "500",
+                  color: MUTED,
+                }}
+              >
+                Zur Warteschlange
+              </ThemedText>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.actionBtn}
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                borderRadius: 20,
+                backgroundColor: S2,
+              }}
               activeOpacity={0.6}
               onPress={() =>
                 Share.share({
@@ -366,9 +593,17 @@ const PlayerScreen = () => {
                 })
               }
             >
-              <Text style={styles.actionLabel}>Teilen</Text>
+              <ThemedText
+                style={{
+                  fontSize: 12,
+                  fontWeight: "500",
+                  color: MUTED,
+                }}
+              >
+                Teilen
+              </ThemedText>
             </TouchableOpacity>
-          </View>
+          </ThemedView>
 
           {/* Künstler Info */}
           <ArtistList
@@ -382,355 +617,3 @@ const PlayerScreen = () => {
 };
 
 export default PlayerScreen;
-
-// ── Styles ───────────────────────────────────────────────────────────
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: BG,
-    paddingHorizontal: 24,
-  },
-
-  // Handle
-  handleArea: {
-    alignItems: "center",
-    paddingTop: 12,
-    paddingBottom: 4,
-  },
-  handle: {
-    width: 36,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: S3,
-  },
-
-  // Topbar
-  topbar: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 16,
-  },
-  closeBtn: {
-    width: 36,
-    height: 36,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  chevronDown: {
-    width: 18,
-    height: 18,
-    borderBottomWidth: 2,
-    borderRightWidth: 2,
-    borderColor: MUTED,
-    transform: [{ rotate: "45deg" }],
-    marginTop: -6,
-  },
-  topbarCenter: {
-    flex: 1,
-    alignItems: "center",
-    gap: 2,
-  },
-  topbarLabel: {
-    fontSize: 10,
-    fontWeight: "600",
-    letterSpacing: 0.8,
-    color: MUTED,
-    textTransform: "uppercase",
-  },
-  topbarAlbum: {
-    fontSize: 13,
-    fontWeight: "500",
-    color: TEXT,
-  },
-  moreBtn: {
-    width: 36,
-    height: 36,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  dotRow: {
-    flexDirection: "column",
-    gap: 3,
-    alignItems: "center",
-  },
-  dot: {
-    width: 4,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: MUTED,
-  },
-
-  // Artwork
-  artworkSection: {
-    alignItems: "center",
-    marginVertical: 24,
-  },
-  artwork: {
-    width: SCREEN_W - 80,
-    height: SCREEN_W - 80,
-    borderRadius: 24,
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 20 },
-    shadowOpacity: 0.6,
-    shadowRadius: 40,
-    elevation: 20,
-  },
-  artworkInner: {
-    flex: 1,
-    borderRadius: 24,
-  },
-
-  // Meta
-  metaRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 16,
-    marginBottom: 24,
-  },
-  metaText: {
-    flex: 1,
-    gap: 4,
-  },
-  trackTitle: {
-    fontSize: 22,
-    fontWeight: "600",
-    color: TEXT,
-  },
-  trackArtist: {
-    fontSize: 15,
-    color: MUTED,
-  },
-
-  // Heart (via Shapes)
-  heartIcon: {
-    width: 28,
-    height: 28,
-    alignItems: "center",
-    justifyContent: "center",
-    opacity: 0.4,
-  },
-  heartIconActive: {
-    opacity: 1,
-  },
-  heartLeft: {
-    position: "absolute",
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    borderWidth: 2,
-    borderColor: ACCENT,
-    top: 4,
-    left: 4,
-  },
-  heartRight: {
-    position: "absolute",
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    borderWidth: 2,
-    borderColor: ACCENT,
-    top: 4,
-    right: 4,
-  },
-  heartBottom: {
-    position: "absolute",
-    bottom: 3,
-    width: 0,
-    height: 0,
-    borderLeftWidth: 14,
-    borderRightWidth: 14,
-    borderTopWidth: 14,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderTopColor: ACCENT,
-  },
-
-  // Progress
-  progressSection: {
-    marginBottom: 28,
-    gap: 8,
-  },
-  progressTrack: {
-    height: 4,
-    backgroundColor: S3,
-    borderRadius: 2,
-  },
-  progressFill: {
-    height: "100%",
-    backgroundColor: ACCENT,
-    borderRadius: 2,
-    position: "relative",
-  },
-  progressThumb: {
-    position: "absolute",
-    right: -6,
-    top: -4,
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: TEXT,
-  },
-  progressTimes: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  timeText: {
-    fontSize: 11,
-    color: DIM,
-    fontVariant: ["tabular-nums"],
-  },
-
-  // Controls
-  controls: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 36,
-  },
-  sideBtn: {
-    width: 44,
-    height: 44,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  playPauseBtn: {
-    width: 68,
-    height: 68,
-    borderRadius: 34,
-    backgroundColor: ACCENT,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: ACCENT,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.35,
-    shadowRadius: 16,
-    elevation: 10,
-  },
-  pauseIcon: {
-    flexDirection: "row",
-    gap: 4,
-    alignItems: "center",
-  },
-  pauseBar: {
-    width: 4,
-    height: 18,
-    borderRadius: 2,
-    backgroundColor: BG,
-  },
-  playIcon: {
-    width: 0,
-    height: 0,
-    borderTopWidth: 10,
-    borderBottomWidth: 10,
-    borderLeftWidth: 16,
-    borderTopColor: "transparent",
-    borderBottomColor: "transparent",
-    borderLeftColor: BG,
-    marginLeft: 4,
-  },
-
-  // Skip Icons
-  skipNextIcon: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 1,
-  },
-  skipPrevIcon: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 1,
-  },
-  skipTriangle: {
-    width: 0,
-    height: 0,
-    borderTopWidth: 7,
-    borderBottomWidth: 7,
-    borderLeftWidth: 11,
-    borderTopColor: "transparent",
-    borderBottomColor: "transparent",
-    borderLeftColor: TEXT,
-  },
-  skipBar: {
-    width: 3,
-    height: 15,
-    borderRadius: 1.5,
-    backgroundColor: TEXT,
-  },
-
-  // Shuffle
-  shuffleLine: {
-    height: 2,
-    borderRadius: 1,
-    backgroundColor: DIM,
-  },
-
-  // Volume
-  volumeRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    marginBottom: 32,
-  },
-  volIcon: {
-    width: 16,
-    height: 12,
-    borderLeftWidth: 4,
-    borderLeftColor: DIM,
-    borderTopWidth: 4,
-    borderTopColor: "transparent",
-    borderBottomWidth: 4,
-    borderBottomColor: "transparent",
-  },
-  volIconMax: {
-    borderRightWidth: 3,
-    borderRightColor: DIM,
-  },
-  volumeTrack: {
-    flex: 1,
-    height: 4,
-    backgroundColor: S3,
-    borderRadius: 2,
-  },
-  volumeFill: {
-    height: "100%",
-    backgroundColor: MUTED,
-    borderRadius: 2,
-    position: "relative",
-  },
-  volumeThumb: {
-    position: "absolute",
-    right: -5,
-    top: -3,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: TEXT,
-  },
-
-  // Bottom
-  bottomActions: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  actionBtn: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    backgroundColor: S2,
-  },
-  actionLabel: {
-    fontSize: 12,
-    fontWeight: "500",
-    color: MUTED,
-  },
-
-  // Generic
-  iconBtn: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  iconBtnAccent: {
-    backgroundColor: ACCENT,
-  },
-});

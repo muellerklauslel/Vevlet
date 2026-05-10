@@ -6,7 +6,7 @@ import ThemedText from "./ThemedText";
 import ThemedView from "./ThemedView";
 import MutedText from "./MutedText";
 
-const AlbumList = ({ style, isPlaying, key, album, ...props }) => {
+const AlbumList = ({ style, isPlaying, album, ...props }) => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
 

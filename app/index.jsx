@@ -153,8 +153,8 @@ const Home = () => {
             <ThemedView style={[{ marginTop: 30, marginBottom: 100 }]}>
               <MutedText>Aktuelle Playlist</MutedText>
               {/* <ScrollView> */}
-              {playlists.map((playlist) => (
-                <PlaylistList key={playlist.id} playlist={playlist} />
+              {playlists.map((playlist, index) => (
+                <PlaylistList key={index} playlist={playlist} />
               ))}
               {/* </ScrollView> */}
             </ThemedView>

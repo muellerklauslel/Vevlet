@@ -161,22 +161,22 @@ const Library = () => {
             {/* Content for the selected tab */}
             {activeTab === "Playlist" ? (
               <ThemedView style={{ marginTop: 24 }}>
-                {playlists.map((playlist) => (
-                  <PlaylistList key={playlist.id} playlist={playlist} />
+                {playlists.map((playlist, index) => (
+                  <PlaylistList key={index} playlist={playlist} />
                 ))}
               </ThemedView>
             ) : null}
             {activeTab === "Album" ? (
               <ThemedView style={{ marginTop: 24 }}>
-                {albums.map((album) => (
-                  <AlbumList key={album.id} album={album} />
+                {albums.map((album, index) => (
+                  <AlbumList key={index} album={album} />
                 ))}
               </ThemedView>
             ) : null}
             {activeTab === "Artist" ? (
               <ThemedView style={{ marginTop: 24 }}>
-                {artist.map((artist) => (
-                  <ArtistList key={artist.id} artist={artist} />
+                {artist.map((artist, index) => (
+                  <ArtistList key={index} artist={artist} />
                 ))}
               </ThemedView>
             ) : null}

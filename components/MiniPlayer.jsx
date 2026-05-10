@@ -53,7 +53,7 @@ const MiniPlayer = ({ style }) => {
       ]}
     >
       <Image
-        source={{ uri: "https://i.scdn.co/image/ab67616d00004851..." }}
+        source={{ uri: "https://i.scdn.co/image/ab67616d00004851" }}
         style={{ width: 50, height: 50, borderRadius: 4 }}
       />
       <ThemedView style={{ backgroundColor: theme.SURFACE3 }}>
