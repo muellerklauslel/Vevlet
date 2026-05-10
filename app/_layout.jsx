@@ -70,8 +70,7 @@ const RootLayout = () => {
               }}
             />
           </Tabs>
-          <MiniPlayer style={{ bottom: 100 }} /> {/* 60 = deine Tab-Bar-Höhe */}
-          <PlayerScreen />
+          <MiniPlayer style={{ bottom: 95 }} /> <PlayerScreen />
         </PlayerProvider>
       </SafeAreaView>
     </SafeAreaProvider>

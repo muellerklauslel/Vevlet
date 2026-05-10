@@ -21,7 +21,6 @@ const SettingListItem = ({
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
 
-  // Handle press based on type
   const handlePress = () => {
     if (type === "toggle" && onToggle) {
       onToggle();
@@ -34,7 +33,6 @@ const SettingListItem = ({
     }
   };
 
-  // Determine right-side element based on type
   const renderRightElement = () => {
     switch (type) {
       case "toggle":
@@ -75,7 +73,6 @@ const SettingListItem = ({
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
-          // marginTop: 10,
           borderBottomWidth: 1,
           borderBottomColor: theme.DIM,
           paddingHorizontal: 12,
@@ -85,7 +82,6 @@ const SettingListItem = ({
       onPress={handlePress}
       {...props}
     >
-      {/* Left Section: Icon */}
       <ThemedView
         style={{
           justifyContent: "center",
@@ -99,7 +95,6 @@ const SettingListItem = ({
         <Ionicons name={icon} size={24} color={theme.ACCENT} />
       </ThemedView>
 
-      {/* Middle Section: Text Content */}
       <ThemedView
         style={{
           backgroundColor: theme.SURFACE3,
@@ -117,7 +112,7 @@ const SettingListItem = ({
         >
           {name}
         </ThemedText>
-        {description && (
+        {description ? (
           <MutedText
             style={{
               color: theme.MUTED,
@@ -127,10 +122,9 @@ const SettingListItem = ({
           >
             {description}
           </MutedText>
-        )}
+        ) : null}
       </ThemedView>
 
-      {/* Right Section: Type-specific element */}
       {renderRightElement()}
     </Pressable>
   );

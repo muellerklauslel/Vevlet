@@ -5,7 +5,7 @@ import ThemedView from "./ThemedView";
 import ThemedText from "./ThemedText";
 import MutedText from "./MutedText";
 
-const PlaylistCard = ({ style, key, ...props }) => {
+const PlaylistCard = ({ style, ...props }) => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
 
@@ -18,7 +18,7 @@ const PlaylistCard = ({ style, key, ...props }) => {
             width: 220,
             borderRadius: 20,
             backgroundColor: theme.SURFACE3,
-            marginTop: 20,
+            marginTop: 8,
             marginRight: 15,
           },
         ]}
@@ -29,8 +29,6 @@ const PlaylistCard = ({ style, key, ...props }) => {
           style={{
             width: 120,
             height: 120,
-            // borderRadius: 8,
-            // color: "white",
             flex: 0,
             marginTop: "auto",
             alignSelf: "center",

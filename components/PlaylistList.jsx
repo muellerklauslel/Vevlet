@@ -6,7 +6,7 @@ import ThemedText from "./ThemedText";
 import ThemedView from "./ThemedView";
 import MutedText from "./MutedText";
 
-const PlaylistList = ({ style, isPlaying, key, playlist, ...props }) => {
+const PlaylistList = ({ style, isPlaying, playlist, ...props }) => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
 
@@ -29,7 +29,6 @@ const PlaylistList = ({ style, isPlaying, key, playlist, ...props }) => {
         style,
       ]}
       onPress={() => console.log("Playlist gedrückt: " + playlist.name)}
-      //   {...props}
     >
       <LinearGradient
         colors={[theme.ACCENT, theme.ACCENT2]}
@@ -68,7 +67,7 @@ const PlaylistList = ({ style, isPlaying, key, playlist, ...props }) => {
             fontSize: 12,
           }}
         >
-          {playlist.artists?.map((artist) => artist.name).join(", ") ||
+          {playlist?.artists?.map((artist) => artist.name).join(", ") ||
             "Artist Name"}
         </MutedText>
       </ThemedView>

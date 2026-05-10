@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Colors } from "../constants/Colors";
-import { FONTS } from "../assets/fonts/fonts";
 import { StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 import ThemedView from "./ThemedView";
 
@@ -41,14 +40,5 @@ const Toggle = ({ initial = false }) => {
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  toggle: {},
-  toggleOn: {},
-  toggleOff: {},
-  toggleKnob: {},
-  knobRight: {},
-  knobLeft: {},
-});
 
 export default Toggle;

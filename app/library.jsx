@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { ScrollView, Text, View, useColorScheme } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+  useColorScheme,
+} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../constants/Colors";
 import { FONTS } from "../assets/fonts/fonts";
@@ -9,6 +15,7 @@ import LibrarySelector from "../components/LibrarySelector";
 import PlaylistList from "../components/PlaylistList";
 import AlbumList from "../components/AlbumList";
 import ArtistList from "../components/ArtistList";
+import { Ionicons } from "@expo/vector-icons";
 
 const Library = () => {
   const colorScheme = useColorScheme();
@@ -86,6 +93,10 @@ const Library = () => {
     },
   ];
 
+  const add = () => {
+    console.log("Add-Button gedrückt");
+  };
+
   return (
     <SafeAreaProvider
       style={{ backgroundColor: theme.BG, fontFamily: FONTS.body }}
@@ -93,15 +104,27 @@ const Library = () => {
       <SafeAreaView>
         <ScrollView style={{ height: "100%" }}>
           <ThemedView style={{ marginLeft: 24, marginRight: 24 }}>
-            <ThemedText
+            <ThemedView
               style={{
-                fontFamily: FONTS.display,
-                fontSize: 32,
-                color: theme.ACCENT,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              Bibliothek
-            </ThemedText>
+              <ThemedText
+                style={{
+                  fontFamily: FONTS.display,
+                  fontSize: 32,
+                  color: theme.ACCENT,
+                }}
+              >
+                Bibliothek
+              </ThemedText>
+              <Pressable onPress={add}>
+                <Ionicons name="add-circle" size={36} color={theme.ACCENT} />
+              </Pressable>
+            </ThemedView>
 
             {/* Playlist / Album / Artist Selector */}
             <ThemedView
@@ -136,27 +159,27 @@ const Library = () => {
             </ThemedView>
 
             {/* Content for the selected tab */}
-            {activeTab === "Playlist" && (
+            {activeTab === "Playlist" ? (
               <ThemedView style={{ marginTop: 24 }}>
                 {playlists.map((playlist) => (
                   <PlaylistList key={playlist.id} playlist={playlist} />
                 ))}
               </ThemedView>
-            )}
-            {activeTab === "Album" && (
+            ) : null}
+            {activeTab === "Album" ? (
               <ThemedView style={{ marginTop: 24 }}>
                 {albums.map((album) => (
                   <AlbumList key={album.id} album={album} />
                 ))}
               </ThemedView>
-            )}
-            {activeTab === "Artist" && (
+            ) : null}
+            {activeTab === "Artist" ? (
               <ThemedView style={{ marginTop: 24 }}>
                 {artist.map((artist) => (
                   <ArtistList key={artist.id} artist={artist} />
                 ))}
               </ThemedView>
-            )}
+            ) : null}
           </ThemedView>
         </ScrollView>
       </SafeAreaView>

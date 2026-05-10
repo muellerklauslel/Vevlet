@@ -28,8 +28,7 @@ const ArtistList = ({ style, isPlaying, key, artist, ...props }) => {
         },
         style,
       ]}
-      onPress={() => console.log("Artist gedrückt: " + artist.name)}
-      //   {...props}
+      onPress={() => console.log("Artist gedrückt: " + artist?.name)}
     >
       <LinearGradient
         colors={[theme.ACCENT, theme.ACCENT2]}
@@ -39,7 +38,7 @@ const ArtistList = ({ style, isPlaying, key, artist, ...props }) => {
           left: 0,
           right: 0,
           bottom: 0,
-          borderRadius: "50%",
+          borderRadius: 35,
           height: 70,
           width: 70,
         }}
@@ -68,7 +67,7 @@ const ArtistList = ({ style, isPlaying, key, artist, ...props }) => {
             fontSize: 12,
           }}
         >
-          {artist.artists?.map((artist) => artist.name).join(", ") ||
+          {artist?.artists?.map((artist) => artist.name).join(", ") ||
             "Artist Name"}
         </MutedText>
       </ThemedView>

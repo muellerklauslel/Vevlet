@@ -4,7 +4,7 @@ export const Colors = {
   dark: {
     ACCENT: "#c9a96e",
     BG: "#0a0a0f",
-    SURFACE: "#13131a",
+    SURFACE: "rgb(19, 19, 26)",
     SURFACE2: "#1c1c26",
     SURFACE3: "#242432",
     ACCENT2: "#e8c98a",

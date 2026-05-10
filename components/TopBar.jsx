@@ -26,8 +26,8 @@ const TopBar = () => {
           Guten {tageszeit}
         </MutedText>
         <ThemedText style={styles.topbar.header.caption}>
-          Hör dir was{" "}
-          <AccentText style={styles.topbar.header.em}>schönes</AccentText> an
+          Hör dir was
+          <AccentText style={styles.topbar.header.em}> schönes</AccentText> an
         </ThemedText>
       </ThemedView>
     </ThemedView>
@@ -55,9 +55,6 @@ const styles = StyleSheet.create({
     },
 
     header: {
-      // paddingTop: 20,
-      //   paddingLeft: 24,
-      //   paddingRight: 24,
       paddingBottom: 0,
       display: "flex",
       alignItems: "flex-start",
@@ -73,7 +70,6 @@ const styles = StyleSheet.create({
         fontFamily: FONTS.display,
         fontSize: 28,
         fontWeight: "500",
-        //   lineHeight: 1.1,
       },
 
       em: {

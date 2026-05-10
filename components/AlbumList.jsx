@@ -56,7 +56,6 @@ const AlbumList = ({ style, isPlaying, key, album, ...props }) => {
         <ThemedText
           style={{
             color: isPlaying ? theme.ACCENT : theme.TEXT,
-
             fontSize: 18,
           }}
         >
@@ -68,7 +67,7 @@ const AlbumList = ({ style, isPlaying, key, album, ...props }) => {
             fontSize: 12,
           }}
         >
-          {album.artists?.map((artist) => artist.name).join(", ") ||
+          {album?.artists?.map((artist) => artist.name).join(", ") ||
             "Artist Name"}
         </MutedText>
       </ThemedView>

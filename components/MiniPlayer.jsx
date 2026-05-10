@@ -10,9 +10,8 @@ import { usePlayer } from "../context/PlayerContext";
 
 const MiniPlayer = ({ style }) => {
   const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme] ?? Colors.light;
+  const theme = Colors[colorScheme] || Colors.light;
 
-  // const [isPlaying, setIsPlaying] = useState(false); // ← Hier kannst du den tatsächlichen Play-Status verwenden
   const {
     currentTrack,
     isPlaying,
@@ -35,17 +34,17 @@ const MiniPlayer = ({ style }) => {
       style={[
         {
           backgroundColor: theme.SURFACE3,
-          flexDirection: "row", // ← Bild + Text nebeneinander
+          flexDirection: "row",
           alignItems: "center",
           padding: 10,
           marginHorizontal: 12,
-          marginBottom: 8, // ← Abstand zur NavBar
+          marginBottom: 8,
           borderRadius: 12,
           shadowColor: "#000",
           shadowOpacity: 0.15,
           shadowRadius: 8,
-          elevation: 5, // Android-Schatten
-          position: "absolute", // ← absolute Positionierung übernehmen
+          elevation: 5,
+          position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
@@ -62,7 +61,6 @@ const MiniPlayer = ({ style }) => {
           style={{
             marginLeft: 12,
             fontFamily: FONTS.body,
-            // overflow: "hidden",
             maxWidth: "70%",
           }}
         >
@@ -73,7 +71,6 @@ const MiniPlayer = ({ style }) => {
         </MutedText>
       </ThemedView>
 
-      {/* Play/Pause Button */}
       <Pressable
         onPress={togglePlayPause}
         style={{ padding: 8, marginLeft: "auto", position: "static" }}
@@ -82,7 +79,7 @@ const MiniPlayer = ({ style }) => {
           name={isPlaying ? "pause" : "play"}
           size={24}
           color={theme.ACCENT}
-          style={{ marginLeft: "auto" }} // ← Button ganz rechts
+          style={{ marginLeft: "auto" }}
         />
       </Pressable>
     </Pressable>

@@ -88,13 +88,12 @@ const ProgressBar = ({ progress, duration, onSeek }) => {
       </Pressable>
       <View style={styles.progressTimes}>
         <Text style={styles.timeText}>{formatTime(elapsed)}</Text>
-        <Text style={styles.timeText}>−{formatTime(remaining)}</Text>
+        <Text style={styles.timeText}>-{formatTime(remaining)}</Text>
       </View>
     </View>
   );
 };
 
-/** Icon-Button (generisch) */
 const IconBtn = ({ onPress, children, size = 44, accent = false }) => (
   <TouchableOpacity
     onPress={onPress}
@@ -102,14 +101,13 @@ const IconBtn = ({ onPress, children, size = 44, accent = false }) => (
     style={[
       styles.iconBtn,
       { width: size, height: size, borderRadius: size / 2 },
-      accent && styles.iconBtnAccent,
+      accent == true ? styles.iconBtnAccent : null,
     ]}
   >
     {children}
   </TouchableOpacity>
 );
 
-/** Play/Pause-Button */
 const PlayPauseBtn = ({ isPlaying, onPress }) => (
   <TouchableOpacity
     onPress={onPress}
@@ -127,27 +125,25 @@ const PlayPauseBtn = ({ isPlaying, onPress }) => (
   </TouchableOpacity>
 );
 
-/** Shuffle-Icon */
 const ShuffleIcon = ({ active }) => (
   <View style={{ gap: 3 }}>
     <View
       style={[
         styles.shuffleLine,
         { width: 14 },
-        active && { backgroundColor: ACCENT },
+        active == true ? { backgroundColor: ACCENT } : null,
       ]}
     />
     <View
       style={[
         styles.shuffleLine,
         { width: 10 },
-        active && { backgroundColor: ACCENT },
+        active == true ? { backgroundColor: ACCENT } : null,
       ]}
     />
   </View>
 );
 
-/** Repeat-Icon-Text */
 const RepeatLabel = ({ mode }) => {
   const color = mode === "off" ? DIM : ACCENT;
   return (
@@ -159,7 +155,6 @@ const RepeatLabel = ({ mode }) => {
   );
 };
 
-// ── Hauptkomponente ──────────────────────────────────────────────────
 const PlayerScreen = () => {
   const {
     playerOpen,
@@ -181,7 +176,6 @@ const PlayerScreen = () => {
     setIsShuffle,
   } = usePlayer();
 
-  // ── Slide-down zum Schließen (PanResponder) ───────────────────────
   const translateY = useRef(new Animated.Value(0)).current;
 
   const panResponder = useRef(

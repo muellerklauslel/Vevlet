@@ -102,7 +102,7 @@ const Home = () => {
             <ThemedView
               style={[
                 {
-                  marginTop: 20,
+                  marginTop: 10,
                   display: "flex",
                   flexDirection: "row",
                   gap: 8,
@@ -136,16 +136,21 @@ const Home = () => {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                style={{ marginTop: -10 }}
+                style={{
+                  width: "100vw",
+                  marginHorizontal: -24,
+                  paddingHorizontal: 24,
+                  paddingRight: 10,
+                }}
               >
-                <PlaylistCard style={{ marginTop: 14 }} key={1} />
-                <PlaylistCard style={{ marginTop: 14 }} key={2} />
-                <PlaylistCard style={{ marginTop: 14 }} key={3} />
+                <PlaylistCard key={1} />
+                <PlaylistCard key={2} />
+                <PlaylistCard key={3} />
               </ScrollView>
             </ThemedView>
 
             {/* Aktuelle Playlist */}
-            <ThemedView style={[{ marginTop: 30, marginBottom: 90 }]}>
+            <ThemedView style={[{ marginTop: 30, marginBottom: 100 }]}>
               <MutedText>Aktuelle Playlist</MutedText>
               {/* <ScrollView> */}
               {playlists.map((playlist) => (

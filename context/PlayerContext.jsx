@@ -6,25 +6,18 @@ import {
   useState,
 } from "react";
 
-// ─────────────────────────────────────────────
-//  Typen / Defaults
-// ─────────────────────────────────────────────
 const DEFAULT_TRACK = {
   id: null,
-  title: "",
-  artist: "",
-  album: "",
-  duration: 0, // in Sekunden
+  title: "Unbekannter Song",
+  artist: "Unbekannter Artist",
+  album: "Unbekanntes Album",
+  duration: 0,
   color1: "#8b5e3c",
   color2: "#c9a96e",
-  // artwork: require(...) oder { uri: "..." }
 };
 
 const PlayerContext = createContext(null);
 
-// ─────────────────────────────────────────────
-//  Provider
-// ─────────────────────────────────────────────
 export const PlayerProvider = ({ children }) => {
   const [currentTrack, setCurrentTrack] = useState(DEFAULT_TRACK);
   const [queue, setQueue] = useState([]);
@@ -32,12 +25,12 @@ export const PlayerProvider = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);
-  const [repeatMode, setRepeatMode] = useState("off"); // "off" | "all" | "one"
-  const [progress, setProgress] = useState(0); // 0–1
-  const [volume, setVolume] = useState(0.8); // 0–1
+  const [repeatMode, setRepeatMode] = useState("off");
+
+  const [progress, setProgress] = useState(0);
+  const [volume, setVolume] = useState(0.8);
   const [playerOpen, setPlayerOpen] = useState(false);
 
-  // Simuliertes Fortschritt-Interval (ersetzbar durch expo-av / react-native-track-player)
   const intervalRef = useRef(null);
 
   const startProgress = useCallback((duration) => {
@@ -49,12 +42,11 @@ export const PlayerProvider = ({ children }) => {
           clearInterval(intervalRef.current);
           return 0;
         }
-        return p + 1 / duration / 10; // tick alle 100ms
+        return p + 1 / duration / 10;
       });
     }, 100);
   }, []);
 
-  /** Track abspielen (und optional eine neue Queue setzen) */
   const playTrack = useCallback(
     (track, newQueue = null) => {
       setCurrentTrack(track);
@@ -126,7 +118,6 @@ export const PlayerProvider = ({ children }) => {
   return (
     <PlayerContext.Provider
       value={{
-        // State
         currentTrack,
         isPlaying,
         isLiked,
@@ -136,7 +127,6 @@ export const PlayerProvider = ({ children }) => {
         volume,
         playerOpen,
         queue,
-        // Aktionen
         playTrack,
         togglePlay,
         skipNext,
@@ -155,9 +145,6 @@ export const PlayerProvider = ({ children }) => {
   );
 };
 
-// ─────────────────────────────────────────────
-//  Hook
-// ─────────────────────────────────────────────
 export const usePlayer = () => {
   const ctx = useContext(PlayerContext);
   if (!ctx)
