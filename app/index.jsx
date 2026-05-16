@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   useColorScheme,
   ScrollView,
   Text,

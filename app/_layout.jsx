@@ -1,25 +1,48 @@
+import { useEffect, useState } from "react";
 import { Tabs } from "expo-router";
 import { useColorScheme } from "react-native";
 import { Colors } from "../constants/Colors";
 import { StatusBar } from "expo-status-bar";
-import ThemedView from "../components/ThemedView";
-import ThemedText from "../components/ThemedText";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { FONTS } from "../assets/fonts/fonts";
 import { Ionicons } from "@expo/vector-icons";
-import * as Svg from "react-native-svg";
 import MiniPlayer from "../components/MiniPlayer";
 import { PlayerProvider } from "../context/PlayerContext";
 import PlayerScreen from "../components/PlayerScreen";
+import { initializeTrackPlayer } from "../services/trackPlayerService";
 
 const RootLayout = () => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
+  const [playerReady, setPlayerReady] = useState(false);
+
+  /**
+   * Initialisiert TrackPlayer beim App-Start
+   */
+  useEffect(() => {
+    const setupTrackPlayer = async () => {
+      try {
+        console.log("🎵 Starte TrackPlayer Initialisierung...");
+        await initializeTrackPlayer();
+        console.log("✅ TrackPlayer erfolgreich initialisiert");
+        setPlayerReady(true);
+      } catch (error) {
+        console.error("❌ Fehler bei der TrackPlayer Initialisierung:", error);
+        // Fallback: App trotzdem laden
+        setPlayerReady(true);
+      }
+    };
+
+    setupTrackPlayer();
+  }, []);
+
+  if (!playerReady) {
+    return null; // Oder ein Loading Screen
+  }
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: theme.BG }}>
-        <StatusBar value="auto" />
+        <StatusBar barStyle="auto" />
         <PlayerProvider>
           <Tabs
             screenOptions={{
@@ -27,6 +50,7 @@ const RootLayout = () => {
               tabBarStyle: {
                 backgroundColor: theme.BG,
                 borderTopColor: theme.MUTED || "#ccc",
+                shadowColor: theme.BG,
                 height: 60,
               },
               tabBarActiveTintColor: theme.ACCENT || "#000",

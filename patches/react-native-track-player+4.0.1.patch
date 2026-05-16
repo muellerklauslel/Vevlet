@@ -1,0 +1,79 @@
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/react-native-track-player/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar
+index e69de29..42d3912 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar and b/node_modules/react-native-track-player/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-hdpi-v4_forward.png.flat b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-hdpi-v4_forward.png.flat
+index e69de29..2d22b9f 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-hdpi-v4_forward.png.flat and b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-hdpi-v4_forward.png.flat differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-hdpi-v4_rewind.png.flat b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-hdpi-v4_rewind.png.flat
+index e69de29..1971628 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-hdpi-v4_rewind.png.flat and b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-hdpi-v4_rewind.png.flat differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-mdpi-v4_forward.png.flat b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-mdpi-v4_forward.png.flat
+index e69de29..b180636 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-mdpi-v4_forward.png.flat and b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-mdpi-v4_forward.png.flat differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-mdpi-v4_rewind.png.flat b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-mdpi-v4_rewind.png.flat
+index e69de29..7479b4c 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-mdpi-v4_rewind.png.flat and b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-mdpi-v4_rewind.png.flat differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xhdpi-v4_forward.png.flat b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xhdpi-v4_forward.png.flat
+index e69de29..7cab0d6 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xhdpi-v4_forward.png.flat and b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xhdpi-v4_forward.png.flat differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xhdpi-v4_rewind.png.flat b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xhdpi-v4_rewind.png.flat
+index e69de29..cb3a760 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xhdpi-v4_rewind.png.flat and b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xhdpi-v4_rewind.png.flat differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxhdpi-v4_forward.png.flat b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxhdpi-v4_forward.png.flat
+index e69de29..d299a43 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxhdpi-v4_forward.png.flat and b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxhdpi-v4_forward.png.flat differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxhdpi-v4_rewind.png.flat b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxhdpi-v4_rewind.png.flat
+index e69de29..118a97d 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxhdpi-v4_rewind.png.flat and b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxhdpi-v4_rewind.png.flat differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxxhdpi-v4_forward.png.flat b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxxhdpi-v4_forward.png.flat
+index e69de29..092defa 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxxhdpi-v4_forward.png.flat and b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxxhdpi-v4_forward.png.flat differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxxhdpi-v4_rewind.png.flat b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxxhdpi-v4_rewind.png.flat
+index e69de29..c3db545 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxxhdpi-v4_rewind.png.flat and b/node_modules/react-native-track-player/android/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable-xxxhdpi-v4_rewind.png.flat differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-hdpi-v4/forward.png b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-hdpi-v4/forward.png
+index e69de29..5e63aa6 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-hdpi-v4/forward.png and b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-hdpi-v4/forward.png differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-hdpi-v4/rewind.png b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-hdpi-v4/rewind.png
+index e69de29..5ef425a 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-hdpi-v4/rewind.png and b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-hdpi-v4/rewind.png differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-mdpi-v4/forward.png b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-mdpi-v4/forward.png
+index e69de29..95876fa 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-mdpi-v4/forward.png and b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-mdpi-v4/forward.png differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-mdpi-v4/rewind.png b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-mdpi-v4/rewind.png
+index e69de29..5a79970 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-mdpi-v4/rewind.png and b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-mdpi-v4/rewind.png differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xhdpi-v4/forward.png b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xhdpi-v4/forward.png
+index e69de29..f8791aa 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xhdpi-v4/forward.png and b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xhdpi-v4/forward.png differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xhdpi-v4/rewind.png b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xhdpi-v4/rewind.png
+index e69de29..3b41913 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xhdpi-v4/rewind.png and b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xhdpi-v4/rewind.png differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxhdpi-v4/forward.png b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxhdpi-v4/forward.png
+index e69de29..b139a7d 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxhdpi-v4/forward.png and b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxhdpi-v4/forward.png differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxhdpi-v4/rewind.png b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxhdpi-v4/rewind.png
+index e69de29..fcddcf0 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxhdpi-v4/rewind.png and b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxhdpi-v4/rewind.png differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxxhdpi-v4/forward.png b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxxhdpi-v4/forward.png
+index e69de29..62f2c20 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxxhdpi-v4/forward.png and b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxxhdpi-v4/forward.png differ
+diff --git a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxxhdpi-v4/rewind.png b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxxhdpi-v4/rewind.png
+index e69de29..1573fb1 100644
+Binary files a/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxxhdpi-v4/rewind.png and b/node_modules/react-native-track-player/android/build/intermediates/packaged_res/debug/packageDebugResources/drawable-xxxhdpi-v4/rewind.png differ
+diff --git a/node_modules/react-native-track-player/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin b/node_modules/react-native-track-player/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin
+index ed2190a..53c79d2 100644
+Binary files a/node_modules/react-native-track-player/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin and b/node_modules/react-native-track-player/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin differ
+diff --git a/node_modules/react-native-track-player/android/src/main/java/com/doublesymmetry/trackplayer/module/MusicModule.kt b/node_modules/react-native-track-player/android/src/main/java/com/doublesymmetry/trackplayer/module/MusicModule.kt
+index b2409a0..e143bd0 100644
+--- a/node_modules/react-native-track-player/android/src/main/java/com/doublesymmetry/trackplayer/module/MusicModule.kt
++++ b/node_modules/react-native-track-player/android/src/main/java/com/doublesymmetry/trackplayer/module/MusicModule.kt
+@@ -545,7 +545,7 @@ class MusicModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaM
+         if (verifyServiceBoundOrReject(callback)) return@launch
+ 
+         if (index >= 0 && index < musicService.tracks.size) {
+-            callback.resolve(Arguments.fromBundle(musicService.tracks[index].originalItem))
++            callback.resolve(musicService.tracks[index].originalItem?.let { Arguments.fromBundle(it) } ?: emptyMap())
+         } else {
+             callback.resolve(null)
+         }
