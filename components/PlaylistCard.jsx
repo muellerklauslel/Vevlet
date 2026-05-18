@@ -1,7 +1,6 @@
 import { Image, Pressable, View, useColorScheme } from "react-native";
 import { Colors } from "../constants/Colors";
 import { FONTS } from "../assets/fonts/fonts";
-import ThemedView from "./ThemedView";
 import ThemedText from "./ThemedText";
 import MutedText from "./MutedText";
 
@@ -22,7 +21,7 @@ const PlaylistCard = ({ style, ...props }) => {
             marginRight: 15,
           },
         ]}
-        onPress={() => console.log("Zuletzt gehört gedrückt: " + key)}
+        onPress={props.onPress}
       >
         <Image
           source={require("../assets/placeholders/playlist-placeholder.png")}

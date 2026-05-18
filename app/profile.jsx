@@ -122,7 +122,7 @@ const profile = () => {
                   description={
                     "Es werden nur Inhalte angezeigt, die runtergeladen wurden"
                   }
-                  icon="volume-high-outline"
+                  icon="cloud-offline-outline"
                   type="toggle"
                   onToggle={() => console.log("Offlinemodus gedrückt")}
                 />

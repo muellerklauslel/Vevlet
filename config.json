@@ -1,0 +1,17 @@
+{
+  "user": "nouser",
+  "playbackQuality": "high",
+  "offlineMode": false,
+
+  "appMode": {
+    "type": "local",
+    "source": "local",
+    "settings": {
+      "libraryPath": "/path/to/your/music/library",
+      "playlistPath": "/path/to/your/playlists",
+      "savedArtistPath": "/path/to/saved/artists.json",
+      "savedAlbumPath": "/path/to/saved/albums.json",
+      "savedTrackPath": "/path/to/saved/tracks.json"
+    }
+  }
+}

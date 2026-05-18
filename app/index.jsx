@@ -11,6 +11,7 @@ import { Colors } from "../constants/Colors";
 import ThemedView from "../components/ThemedView";
 import TopBar from "../components/TopBar";
 import MutedText from "../components/MutedText";
+import { usePlayer } from "../context/PlayerContext";
 
 // Fonts
 import {
@@ -39,6 +40,40 @@ const Home = () => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
   const [selected, setSelected] = useState("Alles");
+
+  const {
+    currentTrack,
+    isPlaying,
+    isLiked,
+    isShuffle,
+    repeatMode,
+    progress,
+    volume,
+    playerOpen,
+    queue,
+    queueIndex,
+    // Aktionen
+    play,
+    pause,
+    stop,
+    setPlaybackSpeed,
+    setPlayerRepeatMode,
+    setShuffleEnabled,
+    setMediaItems,
+    addMediaItems,
+    removeMediaItem,
+    clear,
+    moveMediaItem,
+    updateMetaData,
+    skipNext,
+    skipPrevious,
+    seekTo,
+    setVolume,
+    setIsLiked,
+    setIsShuffle,
+    openPlayer,
+    closePlayer,
+  } = usePlayer();
 
   const playlists = [
     {
@@ -85,6 +120,18 @@ const Home = () => {
       </SafeAreaView>
     );
   }
+
+  const startSong = async () => {
+    await setMediaItems([
+      {
+        id: 1,
+        title: "Song 1",
+        artist: "Artist 1",
+        url: require("../assets/audio/Song1.mp3"),
+      },
+    ]);
+    // play();
+  };
 
   return (
     // App
@@ -142,7 +189,7 @@ const Home = () => {
                   paddingRight: 10,
                 }}
               >
-                <PlaylistCard key={1} />
+                <PlaylistCard key={1} onPress={startSong} />
                 <PlaylistCard key={2} />
                 <PlaylistCard key={3} />
               </ScrollView>

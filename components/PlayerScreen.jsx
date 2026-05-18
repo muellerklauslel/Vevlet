@@ -17,6 +17,7 @@ import { Colors } from "../constants/Colors";
 import ThemedView from "./ThemedView";
 import ThemedText from "./ThemedText";
 import MutedText from "./MutedText";
+import { RepeatMode } from "@rntp/player";
 
 const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get("window");
 
@@ -101,8 +102,8 @@ const ProgressBar = ({ progress, duration, onSeek }) => {
     [onSeek],
   );
 
-  const elapsed = progress * duration;
-  const remaining = duration - elapsed;
+  const elapsed = progress?.position || 0;
+  const remaining = (progress?.duration || 0) - elapsed;
 
   return (
     <ThemedView
@@ -128,7 +129,9 @@ const ProgressBar = ({ progress, duration, onSeek }) => {
               borderRadius: 2,
               position: "relative",
             },
-            { width: `${progress * 100}%` },
+            {
+              width: `${((progress?.position || 0) / (duration || 1)) * 100}%`,
+            },
           ]}
         >
           <ThemedView
@@ -162,7 +165,7 @@ const ProgressBar = ({ progress, duration, onSeek }) => {
         <ThemedText
           style={{
             fontSize: 11,
-            color: DIM,
+            color: theme.DIM,
             fontVariant: ["tabular-nums"],
           }}
         >
@@ -175,8 +178,6 @@ const ProgressBar = ({ progress, duration, onSeek }) => {
 
 const PlayerScreen = () => {
   const {
-    playerOpen,
-    closePlayer,
     currentTrack,
     isPlaying,
     isLiked,
@@ -184,14 +185,30 @@ const PlayerScreen = () => {
     repeatMode,
     progress,
     volume,
-    togglePlay,
+    playerOpen,
+    queue,
+    queueIndex,
+    // Aktionen
+    play,
+    pause,
+    stop,
+    setPlaybackSpeed,
+    setPlayerRepeatMode,
+    setShuffleEnabled,
+    setMediaItems,
+    addMediaItems,
+    removeMediaItem,
+    clear,
+    moveMediaItem,
+    updateMetaData,
     skipNext,
-    skipPrev,
-    cycleRepeat,
+    skipPrevious,
     seekTo,
     setVolume,
     setIsLiked,
     setIsShuffle,
+    openPlayer,
+    closePlayer,
   } = usePlayer();
 
   const translateY = useRef(new Animated.Value(0)).current;
@@ -227,12 +244,22 @@ const PlayerScreen = () => {
     if (playerOpen) translateY.setValue(0);
   }, [playerOpen]);
 
-  const duration = currentTrack.duration || 240;
+  const duration = progress.duration || 0;
 
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
 
   var mode = repeatMode;
+
+  const toggleRepeatMode = () => {
+    if (repeatMode === RepeatMode.Off) {
+      setPlayerRepeatMode(RepeatMode.One);
+    } else if (repeatMode === RepeatMode.One) {
+      setPlayerRepeatMode(RepeatMode.All);
+    } else {
+      setPlayerRepeatMode(RepeatMode.Off);
+    }
+  };
 
   return (
     <Modal
@@ -270,7 +297,7 @@ const PlayerScreen = () => {
                 width: 36,
                 height: 4,
                 borderRadius: 2,
-                backgroundColor: S3,
+                backgroundColor: theme.SURFACE3,
               }}
             />
           </ThemedView>
@@ -331,7 +358,7 @@ const PlayerScreen = () => {
               marginVertical: 24,
             }}
           >
-            <Artwork color2={currentTrack.color2} isPlaying={isPlaying} />
+            <Artwork color2={"theme.SURFACE3"} isPlaying={isPlaying} />
           </ThemedView>
 
           {/* ── Meta + Like ── */}
@@ -357,7 +384,7 @@ const PlayerScreen = () => {
                 }}
                 numberOfLines={1}
               >
-                {currentTrack.title || "Unbekannter Titel"}
+                {currentTrack?.title || "Unbekannter Titel"}
               </ThemedText>
               <ThemedText
                 style={{
@@ -366,7 +393,7 @@ const PlayerScreen = () => {
                 }}
                 numberOfLines={1}
               >
-                {currentTrack.artist || "Unbekannter Künstler"}
+                {currentTrack?.artist || "Unbekannter Künstler"}
               </ThemedText>
             </ThemedView>
             <TouchableOpacity
@@ -417,7 +444,7 @@ const PlayerScreen = () => {
 
             {/* Zurück */}
             <TouchableOpacity
-              onPress={skipPrev}
+              onPress={skipPrevious}
               activeOpacity={0.6}
               style={{
                 width: 44,
@@ -435,7 +462,7 @@ const PlayerScreen = () => {
                 name="pause-circle"
                 size={80}
                 color={theme.ACCENT}
-                onPress={togglePlay}
+                onPress={pause}
                 style={{
                   shadowColor: ACCENT,
                   shadowOffset: { width: 0, height: 8 },
@@ -449,7 +476,7 @@ const PlayerScreen = () => {
                 name="play-circle"
                 size={80}
                 color={theme.ACCENT}
-                onPress={togglePlay}
+                onPress={play}
                 style={{
                   shadowColor: ACCENT,
                   shadowOffset: { width: 0, height: 8 },
@@ -476,7 +503,7 @@ const PlayerScreen = () => {
 
             {/* Repeat */}
             <TouchableOpacity
-              onPress={cycleRepeat}
+              onPress={toggleRepeatMode}
               activeOpacity={0.6}
               style={{
                 width: 44,
@@ -563,7 +590,7 @@ const PlayerScreen = () => {
                 paddingVertical: 10,
                 paddingHorizontal: 20,
                 borderRadius: 20,
-                backgroundColor: S2,
+                backgroundColor: theme.SURFACE2,
               }}
               activeOpacity={0.6}
             >
@@ -582,14 +609,15 @@ const PlayerScreen = () => {
                 paddingVertical: 10,
                 paddingHorizontal: 20,
                 borderRadius: 20,
-                backgroundColor: S2,
+                backgroundColor: theme.SURFACE2,
               }}
               activeOpacity={0.6}
               onPress={() =>
+                currentTrack &&
                 Share.share({
-                  message: `${currentTrack.title} von ${currentTrack.artist}`,
-                  url: currentTrack.url,
-                  title: currentTrack.title,
+                  message: `${currentTrack.title || "Unknown"} von ${currentTrack.artist || "Unknown Artist"}`,
+                  url: currentTrack.url || "",
+                  title: currentTrack.title || "Unknown",
                 })
               }
             >
@@ -607,7 +635,7 @@ const PlayerScreen = () => {
 
           {/* Künstler Info */}
           <ArtistList
-            artist={currentTrack.artist}
+            artist={currentTrack}
             style={{ marginTop: 30, marginBottom: 40 }}
           />
         </ScrollView>

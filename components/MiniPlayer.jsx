@@ -9,20 +9,49 @@ import { Ionicons } from "@expo/vector-icons";
 import { usePlayer } from "../context/PlayerContext";
 
 const MiniPlayer = ({ style }) => {
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme] || Colors.light;
-
   const {
     currentTrack,
     isPlaying,
+    isLiked,
+    isShuffle,
+    repeatMode,
     progress,
-    togglePlay,
+    volume,
+    playerOpen,
+    queue,
+    queueIndex,
+    play,
+    pause,
+    stop,
+    setPlaybackSpeed,
+    setPlayerRepeatMode,
+    setShuffleEnabled,
+    setMediaItems,
+    addMediaItems,
+    removeMediaItem,
+    clear,
+    moveMediaItem,
+    updateMetaData,
     skipNext,
+    skipPrevious,
+    seekTo,
+    setVolume,
+    setIsLiked,
+    setIsShuffle,
     openPlayer,
+    closePlayer,
   } = usePlayer();
 
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme] || Colors.light;
+
   const togglePlayPause = () => {
-    togglePlay();
+    console.log(isPlaying);
+    if (!isPlaying) {
+      play();
+    } else {
+      pause();
+    }
   };
 
   return (
@@ -56,7 +85,7 @@ const MiniPlayer = ({ style }) => {
         source={{ uri: "https://i.scdn.co/image/ab67616d00004851" }}
         style={{ width: 50, height: 50, borderRadius: 4 }}
       />
-      <ThemedView style={{ backgroundColor: theme.SURFACE3 }}>
+      <ThemedView style={{ backgroundColor: theme.SURFACE3, flex: 1 }}>
         <ThemedText
           style={{
             marginLeft: 12,
@@ -64,10 +93,12 @@ const MiniPlayer = ({ style }) => {
             maxWidth: "70%",
           }}
         >
-          Songtitel
+          {currentTrack?.title || "Kein Titel"}
         </ThemedText>
         <MutedText style={{ marginLeft: 12, fontSize: 12 }}>
-          Artist 1, Artist 2
+          {currentTrack?.artist ||
+            currentTrack?.artists?.map((a) => a.name).join(", ") ||
+            "Kein Künstler"}
         </MutedText>
       </ThemedView>
 
