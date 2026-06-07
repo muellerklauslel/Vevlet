@@ -124,13 +124,18 @@ const Home = () => {
   const startSong = async () => {
     await setMediaItems([
       {
-        id: 1,
+        mediaId: "1",
         title: "Song 1",
         artist: "Artist 1",
         url: require("../assets/audio/Song1.mp3"),
       },
+      {
+        mediaId: "2",
+        title: "Song 2",
+        artist: "Artist 2",
+        url: require("../assets/audio/Song2.mp3"),
+      },
     ]);
-    // play();
   };
 
   return (

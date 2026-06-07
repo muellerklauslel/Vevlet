@@ -28,13 +28,33 @@ const PlayerContext = createContext(null);
 //  Provider
 // ─────────────────────────────────────────────
 export const PlayerProvider = ({ children }) => {
+  // ─────────────────────────────────────────────
+  //  State - MUSS oben sein!
+  // ─────────────────────────────────────────────
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [queue, setQueue] = useState([]);
+  const [queueIndex, setQueueIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isShuffle, setIsShuffle] = useState(false);
+  const [repeatMode, setRepeatMode] = useState(RepeatMode.Off);
+  const [progress, setProgress] = useState({ position: 0, duration: 0 });
+  const [volume, setVolumeState] = useState(0.8); // 0–1
+  const [playerOpen, setPlayerOpen] = useState(false);
+
+  // useRef für Progress, um unnötige Re-renders zu vermeiden
+  const lastProgressUpdate = useRef(null);
+
+  // ─────────────────────────────────────────────
+  //  Callbacks
+  // ─────────────────────────────────────────────
   const setupPlayer = useCallback(async () => {
     await TrackPlayer.setupPlayer({
       contentType: "music",
       handleAudioBecomingNoisy: true,
       cache: { maxSize: 1024 * 1024 * 10 },
       progressSync: {
-        intervalSeconds: 30,
+        intervalSeconds: 20, // Mehr Updates für smoothere Animation
       },
       android: {
         wakeMode: "network",
@@ -45,10 +65,11 @@ export const PlayerProvider = ({ children }) => {
   const setCommands = useCallback(async () => {
     await TrackPlayer.setCommands({
       capabilities: [
-        PlayerCommand.Play,
-        PlayerCommand.Pause,
-        PlayerCommand.SkipToNext,
-        PlayerCommand.SkipToPrevious,
+        PlayerCommand.Seek,
+        PlayerCommand.PlayPause,
+        PlayerCommand.Next,
+        PlayerCommand.Previous,
+        PlayerCommand.Stop,
       ],
     });
   }, []);
@@ -120,51 +141,44 @@ export const PlayerProvider = ({ children }) => {
 
   const setPlayerRepeatMode = useCallback(async (mode) => {
     await TrackPlayer.setRepeatMode(mode);
+    setRepeatMode(mode);
   }, []);
 
   const setShuffleEnabled = useCallback(async (enabled) => {
+    console.log("Setting shuffle to", enabled);
     await TrackPlayer.setShuffleEnabled(enabled);
+    setIsShuffle(enabled);
   }, []);
 
   const setSleepTimer = useCallback((duration) => {
     TrackPlayer.setSleepTimer(duration);
   }, []);
 
-  const setSleepTimerTrack = useCallback((trackId) => {
-    TrackPlayer.sleepAfterMediaItemAtIndex();
+  const setSleepTimerTrack = useCallback((trackIndex) => {
+    TrackPlayer.sleepAfterMediaItemAtIndex(trackIndex);
   }, []);
 
   const cancelSleepTimer = useCallback(() => {
     TrackPlayer.cancelSleepTimer();
   }, []);
 
+  // ─────────────────────────────────────────────
+  //  Effects
+  // ─────────────────────────────────────────────
   useEffect(() => {
     (async () => {
       await setupPlayer();
       await setCommands(); // erst nach setup
+
+      // Initiale Werte laden
+      const activeTrack = await TrackPlayer.getActiveMediaItem();
+      if (activeTrack) {
+        setCurrentTrack(activeTrack);
+      }
     })();
 
     return () => TrackPlayer.destroy();
   }, [setupPlayer, setCommands]);
-
-  const [currentTrack, setCurrentTrack] = useState(
-    TrackPlayer.getActiveMediaItem() || null,
-  );
-  const [queue, setQueue] = useState(TrackPlayer.getQueue() || []);
-  const [queueIndex, setQueueIndex] = useState(
-    TrackPlayer.getActiveMediaItemIndex() || 0,
-  );
-  const [isPlaying, setIsPlaying] = useState(TrackPlayer.isPlaying() || false);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isShuffle, setIsShuffle] = useState(
-    TrackPlayer.isShuffleEnabled() || false,
-  );
-  const [repeatMode, setRepeatMode] = useState(
-    TrackPlayer.getRepeatMode() || RepeatMode.Off,
-  ); // "off" | "all" | "one"
-  const [progress, setProgress] = useState({ position: 0, duration: 0 });
-  const [volume, setVolumeState] = useState(TrackPlayer.getVolume() || 0.8); // 0–1
-  const [playerOpen, setPlayerOpen] = useState(false);
 
   // Event-Listener für State-Updates
   useEffect(() => {
@@ -174,12 +188,11 @@ export const PlayerProvider = ({ children }) => {
       // Aktiver Track wechselt
       unsubscribers.push(
         TrackPlayer.addEventListener(
-          Event.ActiveTrackChanged,
-          async ({ index }) => {
-            if (index !== null && index !== undefined) {
-              const track = await TrackPlayer.getActiveMediaItem();
-              setCurrentTrack(track);
-              setQueueIndex(index);
+          Event.MediaItemTransition,
+          async ({ mediaItem, index }) => {
+            if (mediaItem) {
+              setCurrentTrack(mediaItem);
+              setQueueIndex(index ?? 0);
             }
           },
         ),
@@ -200,12 +213,20 @@ export const PlayerProvider = ({ children }) => {
         }),
       );
 
-      // Fortschritt wird aktualisiert
+      // Fortschritt wird aktualisiert - mit Debouncing um Flackern zu vermeiden
       unsubscribers.push(
         TrackPlayer.addEventListener(
           Event.PlaybackProgressUpdated,
           ({ position, duration }) => {
-            setProgress({ position, duration });
+            // Nur aktualisieren wenn sich Position um mindestens 0.1s geändert hat
+            if (
+              !lastProgressUpdate.current ||
+              Math.abs((lastProgressUpdate.current.position || 0) - position) >=
+                0.1
+            ) {
+              lastProgressUpdate.current = { position, duration };
+              setProgress({ position, duration });
+            }
           },
         ),
       );
@@ -274,7 +295,6 @@ export const PlayerProvider = ({ children }) => {
         skipNext,
         skipPrevious,
         seekTo,
-        setVolume,
         setIsLiked,
         setIsShuffle,
         openPlayer,

@@ -7,10 +7,11 @@ import ThemedText from "./ThemedText";
 import MutedText from "./MutedText";
 import { Ionicons } from "@expo/vector-icons";
 import { usePlayer } from "../context/PlayerContext";
+import { useActiveMediaItem } from "@rntp/player";
 
 const MiniPlayer = ({ style }) => {
   const {
-    currentTrack,
+    // currentTrack,
     isPlaying,
     isLiked,
     isShuffle,
@@ -45,12 +46,15 @@ const MiniPlayer = ({ style }) => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] || Colors.light;
 
+  const currentTrack = useActiveMediaItem();
+
   const togglePlayPause = () => {
-    console.log(isPlaying);
     if (!isPlaying) {
       play();
-    } else {
+    } else if (isPlaying) {
       pause();
+    } else {
+      clear();
     }
   };
 
